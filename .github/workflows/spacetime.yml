@@ -19,7 +19,8 @@ jobs:
       - name: Install SpacetimeDB CLI
         run: |
           mkdir -p ~/.spacetime/bin
-          curl -L https://github.com/clockworklabs/SpacetimeDB/releases/latest/download/spacetime-x86_64-unknown-linux.tar.gz | tar -xz -C ~/.spacetime/bin
+          curl -L https://github.com/clockworklabs/SpacetimeDB/releases/download/v2.0.5/spacetime-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C ~/.spacetime/bin
+          chmod +x ~/.spacetime/bin/spacetime
           echo ~/.spacetime/bin >> $GITHUB_PATH
       
       - name: Publish Module
