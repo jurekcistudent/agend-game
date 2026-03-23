@@ -20,11 +20,11 @@ jobs:
         run: |
           curl -L https://github.com/clockworklabs/SpacetimeDB/releases/download/v2.0.5/spacetime-x86_64-unknown-linux-gnu.tar.gz -o spacetime.tar.gz
           tar -xzf spacetime.tar.gz
-          ls -la
           mkdir -p ~/.local/bin
-          mv spacetime ~/.local/bin/
+          mv spacetimedb-cli ~/.local/bin/spacetime
           chmod +x ~/.local/bin/spacetime
           echo ~/.local/bin >> $GITHUB_PATH
+          rm spacetime.tar.gz
       
       - name: Publish Module
         run: |
