@@ -18,11 +18,13 @@ jobs:
       
       - name: Install SpacetimeDB CLI
         run: |
-          curl https://install.spacetimedb.com/cli | sh
-          echo "$HOME/.spacetime/bin" >> $GITHUB_PATH
+          mkdir -p ~/.spacetime/bin
+          curl -L https://github.com/clockworklabs/SpacetimeDB/releases/latest/download/spacetime-x86_64-unknown-linux.tar.gz | tar -xz -C ~/.spacetime/bin
+          echo ~/.spacetime/bin >> $GITHUB_PATH
       
       - name: Publish Module
-        run: spacetime publish agend-game --yes
+        run: |
+          export PATH="$HOME/.spacetime/bin:$PATH"
+          spacetime publish agend-game --yes --no-config
         env:
-          SPACETIME_IDENTITY: ${{ secrets.SPACETIME_IDENTITY }}
           SPACETIME_TOKEN: ${{ secrets.SPACETIME_TOKEN }}
