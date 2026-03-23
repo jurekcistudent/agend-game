@@ -1,0 +1,28 @@
+name: Deploy to SpacetimeDB
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust
+        uses: dtolnay/rust-action@stable
+        with:
+          targets: wasm32-unknown-unknown
+      
+      - name: Install SpacetimeDB CLI
+        run: |
+          curl https://install.spacetimedb.com/cli | sh
+          echo "$HOME/.spacetime/bin" >> $GITHUB_PATH
+      
+      - name: Publish Module
+        run: spacetime publish agend-game --yes
+        env:
+          SPACETIME_IDENTITY: ${{ secrets.SPACETIME_IDENTITY }}
+          SPACETIME_TOKEN: ${{ secrets.SPACETIME_TOKEN }}
